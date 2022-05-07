@@ -1,12 +1,25 @@
+#Copyright 2022 Caleb Stupin
+#PHSC 480 Advanced Physics Laboratory
+#FILE NAME: OscilloscopeApplication.py
+#PROJECT NAME: Raspberry Pi Oscilloscope with Fourier Analysis Capability
+#DESCRIPTION: Runs the main application/graph of the oscilloscope
+
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 import matplotlib.animation as animation
 from ArduinoInput import oscilloscope_input
 
-trigger_voltage = 1
+#We did not end up using this
+#trigger_voltage = 1							
 
 class CustomGraph(animation.TimedAnimation):
+	
+    #FUNCTION: __init__(self)
+    #DESCRIPTION: contructs the class
+    #PARAMETERS: self
+    #RETURNS: N/A
+    #GLOBALS: N/A
     def __init__(self):
         
         time_interval = 90 
@@ -14,9 +27,9 @@ class CustomGraph(animation.TimedAnimation):
         
         self.n = np.linspace(0, time_interval, time_interval + 1)
         self.y = []
-        #self.y = np.zeros(self.n.size)
+        
         print(self.y)
-        #print('ho')
+        
         # The window
         self.fig = plt.figure()
         ax1 = self.fig.add_subplot(1, 2, 1)
@@ -34,13 +47,12 @@ class CustomGraph(animation.TimedAnimation):
 
         animation.TimedAnimation.__init__(self, self.fig, interval=20, blit=True)
 
-#04/25/22:
-#Good news: I can graph my own function point by point, whatever that function may be.  I am currently
-#calling oscilloscope_input from ArduinoInput.py, but I can change that when we hook up the actual analog
-#input from the Arduino.  Now, I need to figure out how to use the trigger voltage (i.e. start the graph 
-#at a specific y-intercept of voltage).
 
-
+    #FUNCTION: _draw_frame(self, framedata)
+    #DESCRIPTION: sets the line data
+    #PARAMETERS: self, framedata
+    #RETURNS: N/A
+    #GLOBALS: N/A
     def _draw_frame(self, framedata):
         #boolean = False
         i = framedata
@@ -60,7 +72,7 @@ class CustomGraph(animation.TimedAnimation):
         print(y_data)
         #print(type(self.y)  )
         #print(float(oscilloscope_input()))
-        #print("\033[1;32;40m yo")      It would be nice to use ANSI escape codes to tell the status of the application
+        #print("\033[1;32;40m yo")      It would be nice to use ANSI escape codes to output the status of the application with colors
         #print(self.y)
         
         
